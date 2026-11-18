@@ -10,11 +10,13 @@
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
     "crear-admin": "tsx --env-file-if-exists=.env.local scripts/crear-admin.ts",
-    "importar-odoo": "tsx --env-file-if-exists=.env.local scripts/importar-odoo.ts"
+    "importar-odoo": "tsx --env-file-if-exists=.env.local scripts/importar-odoo.ts",
+    "importar-sodival": "tsx --env-file-if-exists=.env.local scripts/importar-sodival.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.4",
     "lucide-react": "^1.75.0",
+    "mdb-reader": "^3.2.2",
     "next": "^16.4.6",
     "postgres": "^4.1.1",
     "react": "^19.3.1",
