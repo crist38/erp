@@ -37,3 +37,7 @@ yarn-error.log*
 # typescript build cache
 *.tsbuildinfo
 
+
+# bases Access con datos de clientes
+*.mdb
+*.accdb

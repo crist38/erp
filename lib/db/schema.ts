@@ -1,6 +1,7 @@
 // Esquema de la base de datos propia (PostgreSQL), que reemplaza de a poco a Odoo.
 // Los campos odoo_id guardan el id del registro original para poder importar
 // varias veces sin duplicar y para cruzar datos mientras Odoo siga en uso.
+// Los campos sodival_id cumplen el mismo papel para la base Access antigua (SODIVALBD.mdb).
 
 import {
   pgTable, pgEnum, serial, integer, text, boolean, numeric, timestamp, uniqueIndex, index,
@@ -55,8 +56,11 @@ export const categoriasProducto = pgTable('categorias_producto', {
   id: serial('id').primaryKey(),
   nombre: text('nombre').notNull(),
   odooId: integer('odoo_id'),
+  // Código de la línea en la base Access (ej. 'A' Aluminio, 'C' Cristales)
+  sodivalId: text('sodival_id'),
 }, (t) => [
   uniqueIndex('categorias_producto_odoo_id_idx').on(t.odooId),
+  uniqueIndex('categorias_producto_sodival_id_idx').on(t.sodivalId),
 ])
 
 // Productos de venta, insumos de fabricación y servicios.
@@ -74,10 +78,12 @@ export const productos = pgTable('productos', {
   costo: numeric('costo', { precision: 14, scale: 2 }).notNull().default('0'),
   activo: boolean('activo').notNull().default(true),
   odooId: integer('odoo_id'),
+  sodivalId: integer('sodival_id'),
   creadoEn: timestamp('creado_en', { withTimezone: true }).notNull().defaultNow(),
   actualizadoEn: timestamp('actualizado_en', { withTimezone: true }).notNull().defaultNow(),
 }, (t) => [
   uniqueIndex('productos_odoo_id_idx').on(t.odooId),
+  uniqueIndex('productos_sodival_id_idx').on(t.sodivalId),
   index('productos_codigo_idx').on(t.codigo),
 ])
 

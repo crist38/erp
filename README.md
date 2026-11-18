@@ -33,7 +33,12 @@ Después vienen los tickets de postventa (reparación y recambio) con vista móv
    npm run importar-odoo
    ```
    Se puede repetir: actualiza lo ya importado y no escribe en Odoo. Los usuarios importados quedan con rol Vendedor y sin contraseña; Administración les asigna rol y contraseña en **Usuarios**.
-5. `npm run dev` y abre [http://localhost:3000](http://localhost:3000).
+5. Opcional, copiar datos desde la base Access antigua (`SODIVALBD.mdb`):
+   ```bash
+   npm run importar-sodival -- ruta/a/SODIVALBD.mdb
+   ```
+   Trae clientes y proveedores (cruzados por RUT con lo que ya exista, sin pisar datos), las 77 líneas de producto como categorías y los productos con precio y último costo. Los productos sin ventas desde 2019 quedan inactivos (cámbialo con `--activos-desde=AÑO`, o `--activos-desde=0` para dejarlos todos activos). Los precios son de la última vez que se usó esa base (2021): revísalos. No importa los usuarios antiguos ni el historial de ventas. El archivo `.mdb` no se sube al repositorio.
+6. `npm run dev` y abre [http://localhost:3000](http://localhost:3000).
 
 Si cambias `lib/db/schema.ts`, genera la migración con `npm run db:generate` y aplícala con `npm run db:migrate`.
 
@@ -56,4 +61,4 @@ Las reglas de acceso por sección están en `lib/roles.ts` (las aplica `proxy.ts
 - `app/`: páginas y acciones del servidor (`app/actions`)
 - `lib/db/`: esquema y conexión a la base; migraciones en `drizzle/`
 - `lib/session.ts`, `lib/auth/`, `lib/roles.ts`: sesión, contraseñas y permisos
-- `scripts/`: `crear-admin` e `importar-odoo`
+- `scripts/`: `crear-admin`, `importar-odoo` e `importar-sodival`
